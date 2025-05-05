@@ -109,7 +109,7 @@ Pembeli bisa menghubungi penjual untuk bertanya lebih lanjut.
 ### 2. Tabel ```{Ayam}```
 | Field | Tipe Data | Keterangan |
 | ----------- | ----------- | ----------- |
-|id	| int (auto) |	Primary key (ID unik ayam) |
+|id	| Biginteger (auto) |	Primary key (ID unik ayam) |
 | name |	Varchar	| Nama ayam | 
 | Description	| Text	Deskripsi detail ayam |
 | Harga	| Decimal(12,2) | 	Harga ayam | 
