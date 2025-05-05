@@ -98,7 +98,7 @@ Pembeli bisa menghubungi penjual untuk bertanya lebih lanjut.
 | Field | Tipe Data | Keterangan |
 | ----------- | ----------- | ----------- |
 |id	|int(auto) | Primary key (ID unik setiap user)| 
-| name	| Varcher | Nama pengguna|
+| name	| Varchar | Nama pengguna|
 | email	| Varchar (unique) | Email pengguna, digunakan untuk login|
 | password | Varchar | Password |
 | role	| Enum: admin, penjual, pembeli | Menentukan peran user di sistem | 
