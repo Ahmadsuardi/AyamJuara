@@ -97,7 +97,7 @@ Pembeli bisa menghubungi penjual untuk bertanya lebih lanjut.
 ### 1. Tabel ```{users}```
 | Field | Tipe Data | Keterangan |
 | ----------- | ----------- | ----------- |
-|id	|int(auto) | Primary key (ID unik setiap user)| 
+|id	|integer(auto) | Primary key (ID unik setiap user)| 
 | name	| Varchar | Nama pengguna|
 | email	| Varchar (unique) | Email pengguna, digunakan untuk login|
 | password | Varchar | Password |
@@ -111,7 +111,7 @@ Pembeli bisa menghubungi penjual untuk bertanya lebih lanjut.
 | ----------- | ----------- | ----------- |
 |id	| Biginteger (auto) |	Primary key (ID unik ayam) |
 | name |	Varchar	| Nama ayam | 
-| Description	| Text	Deskripsi detail ayam |
+| Description	| Text	| Deskripsi detail ayam |
 | Harga	| Decimal(12,2) | 	Harga ayam | 
 | Gambar | Varchar | Path gambar ayam di server/public folder |
 | Stok	| Boolean	| Status ketersediaan ayam (default: true)|
