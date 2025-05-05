@@ -79,22 +79,15 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ---
 ## Role dan Fitur
 ### 1. Admin
-**Fokus:** Kelola sistem & pengguna
-| Fitur | Deskripsi |
-| ----------- | ----------- |
-| Kelola User | CRUD data pengguna |
-| Kelola Role dan Hak Akses | Menentukan akses |
-| Laporan Sistem | Export data jadwal, pengguna dsb |
+Admin bisa melihat, mengedit, dan menghapus akun pengguna (baik penjual maupun pembeli).
+Admin bisa mengelola data dan aktivitas seluruh pengguna di platform, memberikan akses kepada penjual untuk mengelola ayam mereka, atau bahkan mengubah status transaksi.
 
-### 2. Manager Gudang
-**Fokus:** Operasional gudang
-| Fitur | Deskripsi |
-| ----------- | ----------- |
-| Lihat Jadwal | Lihat jadwal pengiriman |
-| Konfirmasi Jadwal | Setujui/tolak/proses jadwal petani |
-| Update Jadwal | Tandai sebagai *selesai*, *proses*, dsb |
-| Kelola stok | Tambah/edit jumlah stok |
-| Laporan Gudang | Stok harian, riwayat masuk/keluar |
+### 2. Penjual
+  Penjual bisa memasukkan data ayam baru seperti nama, harga, deskripsi, dan stok ayam.
+  Bisa mengubah data ayam yang sudah ada jika ada perubahan harga, stok,
+  Bisa menghapus ayam dari daftar jika tidak ingin menjualnya lagi.
+
+
 
 ### 3. Petani/Pengguna
 **Fokus:** Kirim gabah / pantau proses
