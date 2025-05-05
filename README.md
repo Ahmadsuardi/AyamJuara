@@ -76,87 +76,65 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ### <p align="center">Framework Web Based</p>
 ### <p align="center">2025</p>
 
----
 ## Role dan Fitur
 ### 1. Admin
 Admin bisa melihat, mengedit, dan menghapus akun pengguna (baik penjual maupun pembeli).
 Admin bisa mengelola data dan aktivitas seluruh pengguna di platform, memberikan akses kepada penjual untuk mengelola ayam mereka, atau bahkan mengubah status transaksi.
 
 ### 2. Penjual
-  Penjual bisa memasukkan data ayam baru seperti nama, harga, deskripsi, dan stok ayam.
-  Bisa mengubah data ayam yang sudah ada jika ada perubahan harga, stok,
-  Bisa menghapus ayam dari daftar jika tidak ingin menjualnya lagi.
+Penjual bisa memasukkan data ayam baru seperti nama, harga, deskripsi, dan stok ayam.
+Bisa mengubah data ayam yang sudah ada jika ada perubahan harga, stok,
+Bisa menghapus ayam dari daftar jika tidak ingin menjualnya lagi.
 
+### 3. Pembeli
+Pembeli bisa melihat daftar ayam yang tersedia untuk dibeli, lengkap dengan detail seperti harga, deskripsi, dan gambar.
+Pembeli bisa memilih ayam yang diinginkan dan melakukan pembelian sesuai dengan jumlah yang diinginkan.
+Pembeli harus membuat akun atau login untuk melakukan pembelian. 
+Pembeli bisa menghubungi penjual untuk bertanya lebih lanjut.
 
-
-### 3. Petani/Pengguna
-**Fokus:** Kirim gabah / pantau proses
-| Fitur | Deskripsi |
-| ----------- | ----------- |
-| Buat Jadwal | Pilih tanggal, gudang tujuan, jumlah gabah, kadar air padi, dan berat gabah |
-| Lihat Status Jadwal | Apakah diterima, di proses atau, selesai |
-| Edit/Hapus Jadwal | Jika jadwal belum di proses |
-
----
 ## Tabel-tabel database beserta field dan tipe datanya
 
 ### 1. Tabel ```{users}```
 | Field | Tipe Data | Keterangan |
 | ----------- | ----------- | ----------- |
-| id | INT(PK) | Primary Key |
-| nama | VARCHAR(100) | Nama User |
-| role_id | INT(FK) | Relasi ke ```{roles.id}``` |
-| email | VARCHAR(100) | Email Unik |
-| password | VARCHAR(255) | Password |
-| created_at | TIMESTAMP | Waktu dibuat |
-| updated_at | TIMESTAMP | Waktu diupdate |
+|id	|int(auto) | Primary key (ID unik setiap user)| 
+| name	| Varcher | Nama pengguna|
+| email	| Varchar (unique) | Email pengguna, digunakan untuk login|
+| password | Varchar | Password |
+| role	| Enum: admin, penjual, pembeli | Menentukan peran user di sistem | 
+| created_at | TimesTamp	| Tanggal akun dibuat |
+| updated_at |	TimesTamp	|  Tanggal terakhir akun diubah |
 
-### 2. Tabel ```{roles}```
+
+### 2. Tabel ```{Ayam}```
 | Field | Tipe Data | Keterangan |
 | ----------- | ----------- | ----------- |
-| id | INT(PK) | Primary Key |
-| nama | VARCHAR(100) | Nama Role: admin, manager gudang, petani |
-| created_at | TIMESTAMP | Waktu dibuat |
+|id	| int (auto) |	Primary key (ID unik ayam) |
+| name |	Varchar	| Nama ayam | 
+| Description	| Text	Deskripsi detail ayam |
+| Harga	| Decimal(12,2) | 	Harga ayam | 
+| Gambar | Varchar | Path gambar ayam di server/public folder |
+| Stok	| Boolean	| Status ketersediaan ayam (default: true)|
+| Created_at |	TimesTamp | Tanggal ayam ditambahkan |
+| Updated_at | TimesTamp | Tanggal ayam terakhir diubah |
 
-### 3. Tabel ```{gudang}```
+
+### 3. Tabel ```{Pesanan}```
 | Field | Tipe Data | Keterangan |
 | ----------- | ----------- | ----------- |
-| id | INT(PK) | Primary Key |
-| nama_gudang | VARCHAR(100) | Nama Gudang |
-| kapasitas | INT | Maksimal kapasitas gudang |
-| created_at | TIMESTAMP | Waktu dibuat |
-| updated_at | TIMESTAMP | Waktu diupdate |
+| Kode_pesanan | Biginteger (auto) |	Primary key transaksi |
+| User_id | Biginteger (FK)	| Foreign key ke users.id → pembeli | 
+| ayam_id | Biginteger (FK)	| Foreign key ke chickens.id → ayam yang dibeli |
+| status | Enum: Menunggu, Dikonfirmasi, Dibatalkan	| Status transaksi COD |
+| note	| Text (optional) | Catatan pembeli (opsional) |
+| created_at	| TimesTamp	| Tanggal transaksi dibuat |
+| Updated_at	| TimesTamp	| Perubahan  dibuat |
 
-### 4. Tabel ```{penjadwalans}```
-| Field | Tipe Data | Keterangan |
-| ----------- | ----------- | ----------- |
-| id | INT(PK) | Primary Key |
-| user_id | INT(FK) | Relasi ke ```{users.id}``` |
-| gudang_id | INT(FK) | Relasi ke ```{gudangs.id}``` |
-| tanggal_kirim | DATE | Tanggal kirim gabah |
-| berat_gabah | FLOAT | Berat gabah dalam kg |
-| kadar_air | FLOAT | Persentase kadar air padi |
-| status | ENUM | 'diajukan', 'diproses', 'selesai', 'ditolak' |
-| created_at | TIMESTAMP | Waktu dibuat |
-| updated_at | TIMESTAMP | Waktu diupdate |
 
-### 5. Tabel ```{stok_gabahs}```
-| Field | Tipe Data | Keterangan |
-| ----------- | ----------- | ----------- |
-| id | INT(PK) | Primary Key |
-| gudang_id | INT(FK) | Relasi ke ```{gudangs.id}``` |
-| tanggal_masuk | DATE | Tanggal kirim gabah |
-| berat_gabah | FLOAT | Berat gabah dalam kg |
-| kadar_air | FLOAT | Persentase kadar air padi |
-| sumber | VARCHAR(100) | Nama petani atau sumber gabah |
-| created_at | TIMESTAMP | Waktu dibuat |
-| updated_at | TIMESTAMP | Waktu diupdate |
-
----
 ## Jenis relasi dan tabel yang berelasi
 | Tabel Asal | Tabel Tujuan | Jenis Relasi | Keterangan |
 | ----------- | ----------- | ----------- | ----------- |
-| ```users.role_id``` | ```roles.id``` | Many to One | Banyak user bisa punya satu role |
-| ```penjadwalans.user_id``` | ```users.id``` | Many to One | Setiap jadwal diajukan oleh satu user |
-| ```penjadwalans.gudang_id``` | ```gudangs.id``` | Many to One | Setiap jadwal diajukan ke satu gudang |
-| ```stok_gabahs.gudang_id``` | ```gudangs.id``` | Many to One | Banyak stok masuk ke satu gudang |
+| Users	| Ayam	| One to Many	| Satu penjual bisa memiliki banyak ayam | 
+| Users	| Pesanan	| One to Many	| Satu pembeli bisa melakukan banyak transaksi |  
+| Ayam	| Pesanan	| One to Many	| Satu ayam bisa muncul dalam banyak transaksi (jika dijual berkali-kali)|  
+
