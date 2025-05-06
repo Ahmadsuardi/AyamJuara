@@ -96,45 +96,74 @@ Pembeli bisa menghubungi penjual untuk bertanya lebih lanjut.
 
 ### 1. Tabel ```{users}```
 | Field | Tipe Data | Keterangan |
-| ----------- | ----------- | ----------- |
-|id	|integer(auto) | Primary key (ID unik setiap user)| 
-| name	| Varchar | Nama pengguna|
-| email	| Varchar (unique) | Email pengguna, digunakan untuk login|
-| password | Varchar | Password |
-| role	| Enum: admin, penjual, pembeli | Menentukan peran user di sistem | 
-| created_at | TimesTamp	| Tanggal akun dibuat |
-| updated_at |	TimesTamp	|  Tanggal terakhir akun diubah |
+| ----------- | ----------- | ----------- |  
+| id	| BIGINT AUTO_INCREMENT PRIMARY KEY	ID unik | pengguna |
+| name	| VARCHAR(255) NOT NULL	| Nama pengguna |
+| email	| VARCHAR(255) UNIQUE NOT NULL	| Email pengguna, digunakan untuk login |
+| password	| VARCHAR(255) NOT NULL	Password | terenkripsi |
+| role	| ENUM('admin', 'penjual', 'pembeli') NOT NULL	| Menentukan peran user |
+| created_at | TIMESTAMP DEFAULT CURRENT_TIMESTAMP	| Tanggal akun dibuat | 
+| updated_at | TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP	| Tanggal terakhir akun diubah|
 
-
-### 2. Tabel ```{Ayam}```
+### 2. Tabel ```{user_profiles}```
 | Field | Tipe Data | Keterangan |
 | ----------- | ----------- | ----------- |
-|id	| Biginteger (auto) |	Primary key (ID unik ayam) |
-| name |	Varchar	| Nama ayam | 
-| Description	| Text	| Deskripsi detail ayam |
-| Harga	| Decimal(12,2) | 	Harga ayam | 
-| Gambar | Varchar | Path gambar ayam di server/public folder |
-| Stok	| Boolean	| Status ketersediaan ayam (default: true)|
-| Created_at |	TimesTamp | Tanggal ayam ditambahkan |
-| Updated_at | TimesTamp | Tanggal ayam terakhir diubah |
+| user_id	| BIGINT PRIMARY KEY	ID | pengguna yang berhubungan dengan {users} |
+| alamat	| VARCHAR(255) NOT NULL |	Alamat lengkap pengguna |
+| telepon	| VARCHAR(20) NOT NULL |	Nomor telepon pengguna |
+| preferensi	| TEXT	| Catatan preferensi pengguna | 
 
 
-### 3. Tabel ```{Pesanan}```
+
+### 3. Tabel ```{ayam}```
 | Field | Tipe Data | Keterangan |
 | ----------- | ----------- | ----------- |
-| Kode_pesanan | Biginteger (auto) |	Primary key transaksi |
-| User_id | Biginteger (FK)	| Foreign key ke users.id → pembeli | 
-| ayam_id | Biginteger (FK)	| Foreign key ke chickens.id → ayam yang dibeli |
-| status | Enum: Menunggu, Dikonfirmasi, Dibatalkan	| Status transaksi COD |
-| note	| Text (optional) | Catatan pembeli (opsional) |
-| created_at	| TimesTamp	| Tanggal transaksi dibuat |
-| Updated_at	| TimesTamp	| Perubahan  dibuat |
+| id	| BIGINT AUTO_INCREMENT | PRIMARY KEY	ID unik ayam | 
+| user_id	| BIGINT NOT NULL	| Foreign key ke {users.id} (penjual) |
+| name	| VARCHAR(255) NOT NULL	| Nama ayam |
+| description	| TEXT NOT NULL	| Deskripsi ayam |
+| harga	| DECIMAL(12,2) NOT NULL	| Harga ayam |
+| gambar	| VARCHAR(255)	| Path gambar ayam di server | 
+| stok	| BOOLEAN DEFAULT TRUE |	Status ketersediaan ayam |
+| created_at	| TIMESTAMP DEFAULT CURRENT_TIMESTAMP	| Tanggal ayam ditambahkan |
+| updated_at	| TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP |	Tanggal ayam terakhir diubah |
+
+
+### 4. Tabel ```{pesanan}```
+| Field | Tipe Data | Keterangan |
+| ----------- | ----------- | ----------- |
+| id	| BIGINT AUTO_INCREMENT |  PRIMARY KEY	ID unik transaksi
+| user_id	| BIGINT NOT NULL	| Foreign key ke {users.id} (pembeli) |
+| status	| ENUM('Menunggu', 'Dikonfirmasi', 'Dibatalkan')  NOT NULL |	Status transaksi |
+| metode_pembayaran	| ENUM('COD', 'Transfer', 'E-Wallet') NOT NULL	| Metode pembayaran |
+| alamat_pengiriman	| TEXT NOT NULL |	Alamat pengiriman pesanan |
+| created_at	| TIMESTAMP DEFAULT CURRENT_TIMESTAMP | Tanggal transaksi dibuat |
+| updated_at	| TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP |	Tanggal terakhir transaksi diubah |
+
+
+### 4. Tabel ```{detail_pesanan}```
+| Field | Tipe Data | Keterangan |
+| ----------- | ----------- | ----------- |
+|pesanan_id	|BIGINT NOT NULL	| Foreign key ke {pesanan.id} |
+|ayam_id	|BIGINT NOT NULL	| Foreign key ke {ayam.id} |
+|jumlah	INT |NOT NULL	| Jumlah ayam dalam transaksi |
+|PRIMARY KEY (pesanan_id, ayam_id) |  
+
+
+
+
+
+
+
 
 
 ## Jenis relasi dan tabel yang berelasi
 | Tabel Asal | Tabel Tujuan | Jenis Relasi | Keterangan |
 | ----------- | ----------- | ----------- | ----------- |
-| Users	| Ayam	| One to Many	| Satu penjual bisa memiliki banyak ayam | 
-| Users	| Pesanan	| One to Many	| Satu pembeli bisa melakukan banyak transaksi |  
-| Ayam	| Pesanan	| One to Many	| Satu ayam bisa muncul dalam banyak transaksi (jika dijual berkali-kali)|  
+| {users}	| {user_profiles}c|	One to One	| Satu pengguna memiliki satu profil |
+| {users}	| {ayam}	| One to Many	| Satu penjual bisa memiliki banyak ayam |
+| {users}	| {pesanan}	| One to Many	| Satu pembeli bisa melakukan banyak transaksi |
+| {pesanan}	| {ayam}	| Many to Many	| Satu pesanan bisa berisi banyak ayam, dan satu ayam bisa muncul dalam banyak transaksi (melalui {detail_pesanan}) |
+| {pesanan}	| {detail_pesanan} |	One to Many	| Satu pesanan bisa memiliki banyak item ayam di dalamnya |
+| {ayam}	| {detail_pesanan}	| One to Many	| Satu ayam bisa muncul dalam banyak pesanan |
 
