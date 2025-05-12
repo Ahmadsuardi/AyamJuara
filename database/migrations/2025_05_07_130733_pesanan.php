@@ -16,6 +16,7 @@ class pesanan extends Migration
             $table->text('alamat_pengiriman');
             $table->timestamps();
         });
+         
     }
 
     public function down()
