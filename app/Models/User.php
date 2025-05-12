@@ -46,6 +46,7 @@ class User extends Authenticatable
         return $this->hasMany(Pesanan::class);
     }
 
+     
     /**
      * Get the attributes that should be cast.
      *

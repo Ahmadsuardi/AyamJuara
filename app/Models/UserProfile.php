@@ -14,6 +14,7 @@ class UserProfile extends Model
         'telepon',
         'preferensi',
     ];
+     
 
     public function user()
     {

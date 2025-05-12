@@ -15,7 +15,8 @@ class Ayam extends Model
         'description',
         'harga',
         'gambar',
-        'stok',
+        'stok', 
+        
     ];
 
     public function user()

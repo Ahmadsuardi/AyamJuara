@@ -15,6 +15,7 @@ class Pesanan extends Model
         'metode_pembayaran',
         'alamat_pengiriman',
     ];
+     
 
     public function user()
     {

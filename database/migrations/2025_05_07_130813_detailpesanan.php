@@ -14,6 +14,7 @@ class detailpesanan extends Migration
             $table->foreignId('ayam_id')->constrained('ayam')->onDelete('cascade');
             $table->integer('jumlah');
             $table->timestamps();
+             
         });
     }
 

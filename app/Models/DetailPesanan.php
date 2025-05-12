@@ -15,6 +15,7 @@ class DetailPesanan extends Model
         'jumlah',
     ];
 
+     
     public function pesanan()
     {
         return $this->belongsTo(Pesanan::class);

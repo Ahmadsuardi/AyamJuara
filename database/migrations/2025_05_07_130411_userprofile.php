@@ -16,6 +16,7 @@ class userprofile extends Migration
             $table->text('preferensi')->nullable();
             $table->timestamps();
         });
+         
     }
 
     public function down()

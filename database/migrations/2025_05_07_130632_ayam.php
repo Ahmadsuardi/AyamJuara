@@ -18,6 +18,7 @@ class ayam extends Migration
             $table->boolean('stok')->default(true);
             $table->timestamps();
         });
+         
     }
 
     public function down()
