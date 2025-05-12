@@ -91,18 +91,18 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 **Fokus:** Membeli ayam laga  
 
 
-## **🛠️ Tabel-tabel Database**
+## **📈 Fitur Utama**
 ### **1️⃣ Tabel `users` (Pengguna)**
-| Field | Tipe Data | Keterangan |
-| ----------- | ----------- | ----------- |
+| Field       | Tipe Data                                          | Keterangan                             |
+|-------------|----------------------------------------------------|----------------------------------------|
+| id          | BIGINT AUTO_INCREMENT PRIMARY KEY                  | ID unik pengguna                       |
+| name        | VARCHAR(255) NOT NULL                              | Nama pengguna                          |
+| email       | VARCHAR(255) UNIQUE NOT NULL                       | Email pengguna, digunakan untuk login |
+| password    | VARCHAR(255) NOT NULL                              | Password terenkripsi                   |
+| role        | ENUM('admin', 'penjual', 'pembeli') NOT NULL       | Menentukan peran user                 |
+| created_at  | TIMESTAMP DEFAULT CURRENT_TIMESTAMP                | Tanggal akun dibuat                    |
+| updated_at  | TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP | Tanggal terakhir akun diubah |
 
-| id	| BIGINT AUTO_INCREMENT PRIMARY KEY	ID | unik pengguna|
-| name	| VARCHAR(255) NOT NULL	| Nama pengguna|
-| email	| VARCHAR(255) UNIQUE NOT NULL	| Email pengguna, digunakan untuk login|
-| password	| VARCHAR(255) NOT NULL	| Password terenkripsi|
-| role	| ENUM('admin', 'penjual', 'pembeli') NOT NULL	| Menentukan peran user|
-| created_at	| TIMESTAMP DEFAULT CURRENT_TIMESTAMP	| Tanggal akun dibuat|
-| updated_at	| TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP	| Tanggal terakhir akun diubah|
 
 ### **2️⃣ Tabel `user_profiles` (Profil Pengguna)**
 | Field | Tipe Data | Keterangan |
