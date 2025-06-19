@@ -71,3 +71,59 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
   <strong>Framework Web Based</strong><br/><br/>
   <strong>2025</strong>
 </p>
+
+###Table User
+| Kolom     | Tipe Data | Keterangan                                         |
+|-----------|-----------|----------------------------------------------------|
+| id        | bigint    | Primary Key, Auto Increment                        |
+| name      | string    | Unik                                               |
+| email     | string    | Unik                                               |
+| password  | string    | Kata sandi (terenkripsi)                           |
+| role      | enum      | Enum: 'admin', 'penjual', 'pembeli' (default: pembeli) |
+| created_at| timestamp | Waktu dibuat (otomatis)                            |
+| updated_at| timestamp | Waktu diperbarui (otomatis)                        |
+
+###Table UserProfil
+| Kolom      | Tipe Data | Keterangan                                          |
+|------------|-----------|-----------------------------------------------------|
+| id         | bigint    | Primary Key, Auto Increment                         |
+| user_id    | foreignId | Relasi ke `users.id`, cascade on delete             |
+| alamat     | string    | Alamat pengguna                                     |
+| telepon    | string    | Nomor telepon pengguna                              |
+| preferensi | text      | Preferensi pengguna (nullable)                      |
+| created_at | timestamp | Waktu dibuat (otomatis)                             |
+| updated_at | timestamp | Waktu diperbarui (otomatis)                         |
+
+###TabelAyam
+| Kolom      | Tipe Data     | Keterangan                                         |
+|------------|---------------|----------------------------------------------------|
+| id         | bigint        | Primary Key, Auto Increment                        |
+| user_id    | foreignId     | Relasi ke `users.id`, cascade on delete            |
+| nama       | string        | Nama produk ayam                                   |
+| description| text          | Deskripsi ayam (nullable)                          |
+| harga      | decimal(12,2) | Harga ayam                                         |
+| gambar     | string        | Path gambar ayam (nullable)                        |
+| stok       | boolean       | Status stok (default: true)                        |
+| created_at | timestamp     | Waktu dibuat (otomatis)                            |
+| updated_at | timestamp     | Waktu diperbarui (otomatis)                        |
+
+###TabelPesanan
+| Kolom           | Tipe Data | Keterangan                                        |
+|------------------|-----------|--------------------------------------------------|
+| id               | bigint    | Primary Key, Auto Increment                      |
+| user_id          | foreignId | Relasi ke `users.id`, cascade on delete          |
+| tanggal_pesanan  | date      | Tanggal pemesanan                                |
+| status           | enum      | Enum: 'proses', 'selesai', 'batal'               |
+| created_at       | timestamp | Waktu dibuat (otomatis)                          |
+| updated_at       | timestamp | Waktu diperbarui (otomatis)                      |
+
+###TabelDetailPesanan
+| Kolom       | Tipe Data | Keterangan                                          |
+|-------------|-----------|-----------------------------------------------------|
+| id          | bigint    | Primary Key, Auto Increment                         |
+| pesanan_id  | foreignId | Relasi ke `pesanan.id`, cascade on delete           |
+| ayam_id     | foreignId | Relasi ke `ayam.id`, cascade on delete              |
+| jumlah      | integer   | Jumlah ayam yang dipesan                            |
+| subtotal    | integer   | Total harga (jumlah * harga ayam)                   |
+| created_at  | timestamp | Waktu dibuat (otomatis)                             |
+| updated_at  | timestamp | Waktu diperbarui (otomatis)                         |
